@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧮 더하기 빨리 계산하기! 🧮</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 장면 1: 게임 시작 화면 -->
+    <div id="start-screen" class="screen active">
+        <div class="retro-container">
+            <div class="retro-grid"></div>
+            <div class="scan-lines"></div>
+            <div class="neon-frame">
+                <div class="retro-timer">⏰</div>
+                <h1 class="retro-title">
+                    <span class="neon-text-inline">🧮 더하기 빨리 <span class="pink">계산하기!</span> 🧮</span>
+                </h1>
+                <div class="retro-description">
+                    <div class="pixel-box">
+                        <p class="retro-text">👉 5초 안에 문제를 풀고 정답을 입력하세요!</p>
+                        <p class="retro-text">3문제 연속 정답 시 음료수 쿠폰이 지급됩니다!</p>
+                        <p class="retro-text">준비되면 시작 버튼을 눌러주세요!</p>
+                    </div>
+                </div>
+                <button class="retro-start-btn" onclick="startGame()">
+                    <span class="btn-text">START GAME</span>
+                    <span class="btn-glow"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 장면 2: 문제 출제 및 입력 -->
+    <div id="game-screen" class="screen">
+        <div class="container">
+            <div class="score-display">연속 정답: <span id="score">0</span>/3</div>
+            <div class="timer-container">
+                <div id="timer-bar" class="timer-bar"></div>
+            </div>
+            <div class="problem-display">
+                <span id="problem"></span>
+            </div>
+            <div class="input-section">
+                <input type="number" id="answer-input" placeholder="답을 입력하세요" readonly>
+                <div class="keypad">
+                    <button class="key" onclick="inputNumber(1)">1</button>
+                    <button class="key" onclick="inputNumber(2)">2</button>
+                    <button class="key" onclick="inputNumber(3)">3</button>
+                    <button class="key" onclick="inputNumber(4)">4</button>
+                    <button class="key" onclick="inputNumber(5)">5</button>
+                    <button class="key" onclick="inputNumber(6)">6</button>
+                    <button class="key" onclick="inputNumber(7)">7</button>
+                    <button class="key" onclick="inputNumber(8)">8</button>
+                    <button class="key" onclick="inputNumber(9)">9</button>
+                    <button class="key clear" onclick="clearInput()">C</button>
+                    <button class="key" onclick="inputNumber(0)">0</button>
+                    <button class="key delete" onclick="deleteNumber()">⌫</button>
+                </div>
+                <button class="submit-btn" onclick="submitAnswer()">확인 ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 장면 3/4: 결과 화면 -->
+    <div id="result-screen" class="screen">
+        <div class="container">
+            <div id="result-message" class="result-message"></div>
+            <div id="flying-image" class="flying-image">
+                <img src="asset/ggg.png" alt="실패 이미지">
+            </div>
+            <div class="result-buttons">
+                <button class="retry-btn" onclick="restartGame()">다시 하기 🔁</button>
+                <button class="home-btn" onclick="goHome()">홈으로 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 장면 5: 쿠폰 지급 화면 -->
+    <div id="success-screen" class="screen">
+        <div class="container">
+            <div class="confetti-container" id="confetti"></div>
+            <div class="success-message">
+                <h2>🎉 축하합니다! 3문제를 연속 정답하셨어요! 🎉</h2>
+            </div>
+            <div class="coupon-display">
+                <div class="coupon">
+                    <div class="coupon-header">🥤 음료수 1잔 무료 쿠폰</div>
+                    <div class="coupon-body">
+                        <div class="coupon-title">더하기 빨리 계산하기!</div>
+                        <div class="coupon-content">3문제 연속 정답 달성</div>
+                        <div class="coupon-date" id="coupon-date"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="success-buttons">
+                <button class="save-btn" onclick="saveCoupon()">쿠폰 저장하기 💾</button>
+                <button class="home-btn" onclick="goHome()">홈으로 🏠</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 숨겨진 캔버스 (쿠폰 이미지 생성용) -->
+    <canvas id="coupon-canvas" style="display: none;"></canvas>
+
+    <!-- 오디오 파일들 -->
+    <audio id="success-sound" preload="auto">
+        <source src="asset/Ascending 3.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="fail-sound" preload="auto">
+        <source src="asset/fail_01.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="complete-sound" preload="auto">
+        <source src="asset/suc_01.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html> 

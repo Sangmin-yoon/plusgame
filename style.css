@@ -1,0 +1,781 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    color: #00ff41;
+}
+
+/* 화면 전환 */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s ease-in-out;
+}
+
+.screen.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.container {
+    width: 90%;
+    max-width: 1040px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 52px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 40px;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 레트로 시작 화면 */
+.retro-container {
+    width: 90%;
+    max-width: 1040px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 52px;
+    position: relative;
+    overflow: hidden;
+}
+
+.retro-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: grid-move 4s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes grid-move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(20px, 20px); }
+}
+
+.scan-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 2px,
+        rgba(0, 255, 65, 0.03) 2px,
+        rgba(0, 255, 65, 0.03) 4px
+    );
+    pointer-events: none;
+    animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+    0% { opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+.neon-frame {
+    background: rgba(0, 0, 0, 0.8);
+    border: 4px solid #00ff41;
+    border-radius: 30px;
+    padding: 78px;
+    box-shadow: 
+        0 0 40px #00ff41,
+        inset 0 0 40px rgba(0, 255, 65, 0.1);
+    backdrop-filter: blur(20px);
+    position: relative;
+    z-index: 10;
+    animation: neon-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes neon-glow {
+    from {
+        box-shadow: 
+            0 0 40px #00ff41,
+            inset 0 0 40px rgba(0, 255, 65, 0.1);
+    }
+    to {
+        box-shadow: 
+            0 0 60px #00ff41,
+            0 0 80px #00ff41,
+            inset 0 0 60px rgba(0, 255, 65, 0.2);
+    }
+}
+
+.retro-timer {
+    font-size: 6rem;
+    text-align: center;
+    margin-bottom: 40px;
+    animation: retro-pulse 1.5s infinite;
+    filter: drop-shadow(0 0 20px #ffff00);
+}
+
+@keyframes retro-pulse {
+    0%, 100% { 
+        transform: scale(1);
+        filter: drop-shadow(0 0 20px #ffff00);
+    }
+    50% { 
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 40px #ffff00) drop-shadow(0 0 60px #ffff00);
+    }
+}
+
+.retro-title {
+    text-align: center;
+    margin-bottom: 60px;
+    line-height: 1.3;
+    width: 100%;
+    overflow: hidden;
+}
+
+.neon-text {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 900;
+    font-family: 'Orbitron', 'Noto Sans KR', sans-serif;
+    color: #00ff41;
+    text-shadow: 
+        0 0 5px #00ff41,
+        0 0 10px #00ff41,
+        0 0 15px #00ff41;
+    animation: neon-flicker 3s infinite alternate;
+    margin-bottom: 5px;
+}
+
+.neon-text-inline {
+    display: inline;
+    font-size: 3.8rem;
+    font-weight: 900;
+    font-family: 'Orbitron', 'Noto Sans KR', sans-serif;
+    color: #00ff41;
+    text-shadow: 
+        0 0 10px #00ff41,
+        0 0 20px #00ff41,
+        0 0 30px #00ff41;
+    animation: neon-flicker 3s infinite alternate;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.neon-text-inline .pink {
+    color: #ff0080;
+    text-shadow: 
+        0 0 10px #ff0080,
+        0 0 20px #ff0080,
+        0 0 30px #ff0080;
+}
+
+.neon-text.pink {
+    color: #ff0080;
+    text-shadow: 
+        0 0 5px #ff0080,
+        0 0 10px #ff0080,
+        0 0 15px #ff0080;
+}
+
+.neon-text.cyan {
+    color: #00ffff;
+    text-shadow: 
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 15px #00ffff;
+}
+
+@keyframes neon-flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.retro-description {
+    margin-bottom: 80px;
+}
+
+.pixel-box {
+    background: rgba(0, 20, 40, 0.8);
+    border: 2px solid #00ff41;
+    border-radius: 16px;
+    padding: 40px;
+    position: relative;
+}
+
+.pixel-box::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00ff41, #ff0080, #00ffff, #ffff00);
+    border-radius: 16px;
+    z-index: -1;
+    animation: pixel-border 3s linear infinite;
+}
+
+@keyframes pixel-border {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+.retro-text {
+    font-size: 1.8rem;
+    color: #00ff41;
+    margin-bottom: 16px;
+    line-height: 1.4;
+    text-shadow: 0 0 10px #00ff41;
+    font-family: 'Courier New', monospace;
+}
+
+.retro-start-btn {
+    background: linear-gradient(45deg, #ff0080, #00ffff);
+    color: #000;
+    border: none;
+    padding: 30px 80px;
+    font-size: 2.4rem;
+    font-weight: 900;
+    border-radius: 0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    box-shadow: 
+        0 0 40px rgba(255, 0, 128, 0.5),
+        inset 0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+.btn-text {
+    position: relative;
+    z-index: 2;
+    font-family: 'Courier New', monospace;
+}
+
+.btn-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.retro-start-btn:hover {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 
+        0 20px 60px rgba(255, 0, 128, 0.8),
+        0 0 80px rgba(0, 255, 255, 0.6),
+        inset 0 0 60px rgba(255, 255, 255, 0.3);
+    animation: retro-btn-pulse 0.5s ease-in-out;
+}
+
+.retro-start-btn:hover .btn-glow {
+    left: 100%;
+}
+
+@keyframes retro-btn-pulse {
+    0% { transform: translateY(-6px) scale(1.05); }
+    50% { transform: translateY(-10px) scale(1.1); }
+    100% { transform: translateY(-6px) scale(1.05); }
+}
+
+/* 게임 화면 */
+.score-display {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #4a5568;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* 성공 메시지 오버레이 */
+.success-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeInOut 1.5s ease-in-out;
+}
+
+.success-message-popup {
+    background: linear-gradient(135deg, #00ff41, #00ffff);
+    color: #000;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 
+        0 0 30px #00ff41,
+        0 0 50px #00ffff;
+    animation: successPulse 1.5s ease-in-out;
+}
+
+.success-text {
+    font-size: 1.8rem;
+    font-weight: 900;
+    font-family: 'Orbitron', 'Noto Sans KR', sans-serif;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.success-score {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: 'Orbitron', 'Noto Sans KR', sans-serif;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: scale(0.8); }
+    20% { opacity: 1; transform: scale(1.1); }
+    80% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.9); }
+}
+
+@keyframes successPulse {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.timer-container {
+    width: 100%;
+    height: 20px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    margin-bottom: 60px;
+    overflow: hidden;
+}
+
+.timer-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #48bb78, #38a169);
+    border-radius: 10px;
+    transition: width 0.1s linear;
+    width: 100%;
+}
+
+.timer-bar.warning {
+    background: linear-gradient(90deg, #ed8936, #dd6b20);
+}
+
+.timer-bar.danger {
+    background: linear-gradient(90deg, #e53e3e, #c53030);
+}
+
+.problem-display {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #2d3748;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 15px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-section {
+    width: 100%;
+}
+
+#answer-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5rem;
+    text-align: center;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background: white;
+    color: #2d3748;
+}
+
+#answer-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.key {
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    background: #f7fafc;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.key:hover {
+    background: #edf2f7;
+    transform: translateY(-1px);
+}
+
+.key:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.key.clear {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+.key.delete {
+    background: #bee3f8;
+    color: #2b6cb0;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #48bb78, #38a169);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(72, 187, 120, 0.4);
+}
+
+/* 결과 화면 */
+.result-message {
+    font-size: 2rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.result-message.success {
+    background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+    color: #22543d;
+}
+
+.result-message.fail {
+    background: linear-gradient(135deg, #fed7d7, #feb2b2);
+    color: #742a2a;
+}
+
+.flying-image {
+    position: absolute;
+    top: 50%;
+    left: -100px;
+    opacity: 0;
+    animation: flyAcross 4s ease-in-out;
+}
+
+.flying-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+@keyframes flyAcross {
+    0% {
+        left: -100px;
+        opacity: 0;
+        transform: translateY(-50%) rotate(0deg);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        left: calc(100% + 100px);
+        opacity: 0;
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+.result-buttons, .success-buttons {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.retry-btn, .home-btn, .save-btn {
+    flex: 1;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.retry-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.home-btn {
+    background: linear-gradient(135deg, #a0aec0, #718096);
+    color: white;
+    box-shadow: 0 4px 8px rgba(160, 174, 192, 0.3);
+}
+
+.save-btn {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+    color: white;
+    box-shadow: 0 4px 8px rgba(237, 137, 54, 0.3);
+}
+
+.retry-btn:hover, .home-btn:hover, .save-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* 성공 화면 */
+.success-message {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.success-message h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #22543d;
+    background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+    padding: 20px;
+    border-radius: 15px;
+    line-height: 1.4;
+}
+
+.coupon-display {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.coupon {
+    background: white;
+    border: 2px dashed #ed8936;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.coupon-header {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.coupon-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.coupon-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 10px;
+}
+
+.coupon-content {
+    font-size: 1rem;
+    color: #4a5568;
+    margin-bottom: 15px;
+}
+
+.coupon-date {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+/* 축포 애니메이션 */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ffd700;
+    animation: confetti-fall 3s linear infinite;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .retro-container {
+        width: 95%;
+        padding: 38px;
+    }
+    
+    .neon-frame {
+        padding: 52px;
+    }
+    
+    .neon-text {
+        font-size: 3rem;
+    }
+    
+    .neon-text-inline {
+        font-size: 2.8rem;
+    }
+    
+    .retro-timer {
+        font-size: 5rem;
+    }
+    
+    .retro-text {
+        font-size: 1.6rem;
+    }
+    
+    .retro-start-btn {
+        padding: 24px 60px;
+        font-size: 2rem;
+    }
+    
+    .problem-display {
+        font-size: 2.5rem;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+    .container {
+        height: auto;
+        min-height: 100vh;
+        padding: 10px;
+    }
+    
+    .retro-container {
+        height: auto;
+        min-height: 100vh;
+        padding: 26px;
+    }
+    
+    .neon-frame {
+        padding: 38px;
+    }
+    
+    .retro-timer {
+        font-size: 4rem;
+        margin-bottom: 20px;
+    }
+    
+    .neon-text {
+        font-size: 2.6rem;
+        margin-bottom: 6px;
+    }
+    
+    .neon-text-inline {
+        font-size: 2.6rem;
+    }
+    
+    .retro-title {
+        margin-bottom: 30px;
+    }
+    
+    .retro-description {
+        margin-bottom: 40px;
+    }
+    
+    .pixel-box {
+        padding: 30px;
+    }
+    
+    .retro-text {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+    
+    .retro-start-btn {
+        padding: 20px 60px;
+        font-size: 2rem;
+    }
+    
+    .problem-display {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        padding: 15px;
+    }
+} 
